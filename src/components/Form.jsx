@@ -1,10 +1,9 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "../styles/Form.module.css";
 import { AppContext } from "../App";
 
 export default function Form({ isVisible }) {
-    const { addTask, toggleForm } = useContext(AppContext);
-
+    const { allTasks, setAllTasks, toggleForm } = useContext(AppContext);
     const [formData, setFormData] = useState(
         {
             title: "",
@@ -17,28 +16,24 @@ export default function Form({ isVisible }) {
     );
 
     const d = new Date();
-    const [date, setDate]  = useState(d.toLocaleDateString('en-CA'));
-    const [time, setTime]  = useState(d.toLocaleTimeString("en-US", { hour12: false }));
+    const [dateTime, setDateTime]  = useState(d.toLocaleString());
 
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        if ( name.match("due-date")) {
-            if (name === "due-date-time") setTime(value);
-            else setDate(value);
-
-            const d = new Date(`${date} ${time}`).toLocaleString();
-            console.log(`**Current due date: ${d}\n`);
-            setFormData({...formData, dueDate: d});
-
+        if (name === "due-date") {
+            setDateTime((dateTime) => dateTime)
+        const currentDate = new Date(dateTime).toLocaleString();
+        setFormData((formData) => ({...formData, dueDate: currentDate}));
         } else setFormData({...formData, [name]: value});
-        console.log(formData);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("**Submitting form**\n", formData);
-        addTask(formData);
+        const currentDate = new Date(dateTime).toLocaleString();
+        setFormData((formData) => ({...formData, dueDate: currentDate}));
+        
+        setAllTasks([...allTasks, formData]);
         toggleForm();
     }
 
@@ -70,16 +65,8 @@ export default function Form({ isVisible }) {
                         <input 
                             id="due-date" 
                             name="due-date" 
-                            type="date"
-                            value={date} 
-                            min={d.toLocaleDateString('en-CA')}
-                            onChange={handleChange}
-                        />
-                        <input 
-                            id="due-date-time" 
-                            name="due-date-time" 
-                            type="time"
-                            value={time}
+                            type="datetime-local"
+                            min={d.toLocaleString('en-CA')}
                             onChange={handleChange}
                         />
                     </div>

@@ -1,4 +1,4 @@
-import App, { AppContext } from "../App";
+import { AppContext } from "../App";
 import styles from "../styles/DayTasks.module.css"
 import { TaskList } from "./Task";
 import { useContext } from "react";

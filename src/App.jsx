@@ -1,4 +1,4 @@
-import { useState, createContext } from 'react'
+import { useState, createContext, useEffect } from 'react'
 import DayTasks from "./components/DayTasks"
 import './App.css'
 import Form from './components/Form';
@@ -7,7 +7,6 @@ export const AppContext = createContext({
     dayTasks: [],
     weekTasks: [],
     allTasks: [],
-    addTask: () => {},
     toggleForm: () => {},
 });
 
@@ -41,20 +40,29 @@ function App() {
     const [isNavbarOpen, setIsNavbarOpen] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
-    const addTask = (newTask) => {
-        // We add the new task to all tasks list
-        // The we update the other lists depending on whether or not the new task fits in their timespan
 
-        setAllTasks(() => sortTasks(() => [...allTasks, newTask]));
-        setDayTasks(() => getDayTasks(allTasks));
+    useEffect(() => {
+        setDayTasks(getDayTasks(allTasks));
         setWeekTasks(() => getWeekTasks(allTasks));
+
+    }, [allTasks])
+
+    const addTask = (newTask) => {
+
+        let temp = [...allTasks, newTask];
+        setAllTasks(() => temp);
+
+        console.log("Temp: ", temp);
+        console.log("All tasks: ", allTasks);
     }
 
     const toggleNavbar = () => setIsNavbarOpen(!isNavbarOpen);
     const toggleForm = () => setIsFormVisible(!isFormVisible);
+
+    const contextValue = { dayTasks, weekTasks, allTasks, setAllTasks, toggleForm };
     
     return (
-        <AppContext.Provider value={{ dayTasks, weekTasks, allTasks, addTask, toggleForm }}>
+        <AppContext.Provider value={contextValue}>
             <UtilityBtn use={toggleNavbar} />
             <div className='main'>
                 <DayTasks />
