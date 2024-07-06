@@ -1,33 +1,7 @@
+import App, { AppContext } from "../App";
 import styles from "../styles/DayTasks.module.css"
 import { TaskList } from "./Task";
-
-
-const tasks = [
-    {
-        title: "Build react app",
-        dueDate: "8:00:00 AM",
-        notes: "Use secure coding practice",
-        description: "Ensure all functionality are displayed correctly",
-    },
-    {
-        title: "Build react app",
-        dueDate: "9:00:00 AM",
-        notes: "Use secure coding practice",
-        description: "Ensure all functionality are displayed correctly",
-    },
-    {
-        title: "Build react app",
-        dueDate: "10:00:00 AM",
-        notes: "Use secure coding practice",
-        description: "Ensure all functionality are displayed correctly",
-    },
-    {
-        title: "Build react app",
-        dueDate: "11:00:00 AM",
-        notes: "Use secure coding practice",
-        description: "Ensure all functionality are displayed correctly",
-    },
-];
+import { useContext } from "react";
 
 const getQuote = () => {
     // Should use the localStorage to query a random quote in the list
@@ -54,7 +28,9 @@ function Header() {
 
 function DayStatus() {
     const [weekDay, month, day] = new Date().toString().split(" ");
-    const nTasks = 4;
+    const { dayTasks } = useContext(AppContext);
+    const nTasks = dayTasks.length;
+
     const status = (!nTasks) 
         ? "no event" 
         : (nTasks === 1) 
@@ -75,12 +51,13 @@ function DayStatus() {
 
 
 function DayTasks() {
+    const { dayTasks } = useContext(AppContext);
     
     return (
         <div className={styles["wrapper"]}>
             <Header />
             <DayStatus />
-            <TaskList tasks={tasks} />
+            <TaskList tasks={dayTasks} />
             <button className={styles["add-task-btn"]}>
                 New Task
             </button>
