@@ -22,7 +22,7 @@ export default function Form({ isVisible }) {
         const { name, value } = e.target;
 
         if (name === "due-date") {
-            setDateTime((dateTime) => dateTime)
+            setDateTime(value);
         const currentDate = new Date(dateTime).toLocaleString();
         setFormData((formData) => ({...formData, dueDate: currentDate}));
         } else setFormData({...formData, [name]: value});
