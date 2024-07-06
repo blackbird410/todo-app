@@ -6,9 +6,20 @@
     padding: 1.5rem;
     z-index: 3;
     height: 100%;
+    background: #36454F;
 }
 
 .top {
+    border-bottom: 2px solid orange;
+}
+
+.bottom > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.5rem;
+    border-bottom: 2px solid orange;
 }
 
 .option-wrapper {
@@ -25,4 +36,8 @@
 
 .option-wrapper:hover {
     background: orange;
+}
+
+.count {
+    color: orange;
 }

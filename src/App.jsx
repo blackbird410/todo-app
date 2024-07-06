@@ -3,14 +3,9 @@ import DayTasks from "./components/DayTasks"
 import './App.css'
 import Form from './components/Form';
 import Navbar from './components/Navbar';
+import UserListForm from './components/UserListForm';
 
-export const AppContext = createContext({
-    dayTasks: [],
-    weekTasks: [],
-    allTasks: [],
-    toggleForm: () => {},
-    toggleNavbar: () => {},
-});
+export const AppContext = createContext(null);
 
 function UtilityBtn({ use }) {
     return (
@@ -36,10 +31,12 @@ const sortTasks = (taskList) => {
 
 function App() {
     const [allTasks, setAllTasks] = useState([]);
-    const [dayTasks, setDayTasks] = useState(getDayTasks(allTasks));
-    const [weekTasks, setWeekTasks] = useState(getWeekTasks(allTasks));
+    const [dayTasks, setDayTasks] = useState([]);
+    const [weekTasks, setWeekTasks] = useState([]);
+    const [userList, setUserList] = useState([]);
     const [isNavbarOpen, setIsNavbarOpen] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [isListFormVisible, setIsListFormVisible] = useState(false);
 
     useEffect(() => {
         setDayTasks(getDayTasks(allTasks));
@@ -48,15 +45,21 @@ function App() {
 
     const toggleNavbar = () => setIsNavbarOpen(!isNavbarOpen);
     const toggleForm = () => setIsFormVisible(!isFormVisible);
+    const toggleListForm = () => setIsListFormVisible(!isListFormVisible);
 
     const contextValue = { 
         dayTasks, 
         weekTasks, 
         allTasks, 
+        userList,
         isNavbarOpen,
         isFormVisible,
+        isListFormVisible,
         setAllTasks, 
-        toggleForm };
+        setUserList,
+        toggleForm, 
+        toggleListForm,
+    };
     
     return (
         <AppContext.Provider value={contextValue}>
@@ -65,6 +68,7 @@ function App() {
                 <Navbar />
                 <DayTasks />
                 <Form />
+                <UserListForm />
             </div>
         </AppContext.Provider>
     );

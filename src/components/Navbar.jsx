@@ -24,7 +24,7 @@ function TaskOption({ title, count }) {
 }
 
 export default function Navbar() {
-    const { dayTasks, weekTasks, isNavbarOpen, allTasks } = useContext(AppContext);
+    const { dayTasks, weekTasks, isNavbarOpen, allTasks, userList, toggleListForm } = useContext(AppContext);
 
     return (
         <>{isNavbarOpen && 
@@ -43,7 +43,13 @@ export default function Navbar() {
                         count={allTasks.length} 
                     />
                 </div>
-                <div className={styles.bottom}></div>
+                <div className={styles.bottom}>
+                    <header>
+                        <div>My lists</div>
+                        <ion-icon name="add-circle" onClick={toggleListForm}></ion-icon>
+                    </header>
+                    {userList.map((checklist) => <TaskOption key={checklist} title={checklist} count={4} />)}
+                </div>
             </div>
         }
         </>
