@@ -51,14 +51,17 @@ function DayStatus() {
 
 
 function DayTasks() {
-    const { dayTasks } = useContext(AppContext);
+    const { dayTasks, toggleForm } = useContext(AppContext);
     
     return (
         <div className={styles["wrapper"]}>
             <Header />
             <DayStatus />
             <TaskList tasks={dayTasks} />
-            <button className={styles["add-task-btn"]}>
+            <button 
+                className={styles["add-task-btn"]}
+                onClick={toggleForm}
+            >
                 New Task
             </button>
         </div>
