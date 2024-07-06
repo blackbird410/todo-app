@@ -1,12 +1,27 @@
 import { AppContext } from "../App";
 import styles from "../styles/DayTasks.module.css"
 import { TaskList } from "./Task";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 
-const getQuote = () => {
-    // Should use the localStorage to query a random quote in the list
-    return "Remove doubts with action";
-}
+
+const fetchQuote = () => {
+    const [quote, setQuote] = useState({});
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetch('https://api.quotable.io/quotes/random?maxLength=40')
+            .then(res=> {
+                if (res.status >= 400) throw new Error("server error");
+                return res.json()
+            })
+            .then(json => setQuote(json))
+        .catch((error) => setError(error))
+        .finally(() => setLoading(false));
+    }, []);
+
+    return { quote, error, loading };
+};
 
 function Header() {
     const currentTime = new Date().getHours();
@@ -17,11 +32,12 @@ function Header() {
             : currentTime < 17 
                 ? "Afternoon" 
                 : "Evening" ;
+    const { quote, loading } = fetchQuote();
 
     return (
         <header>
             <h1>{`Good ${partOfDay}`}</h1>
-            <h2>{`${getQuote()}`}</h2>
+            <h2>{`${ loading ? "Remove doubts with action." : quote[0].content }`}</h2>
         </header>
     );
 }
