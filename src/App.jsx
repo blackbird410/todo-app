@@ -25,10 +25,6 @@ const getWeekTasks = (taskList) => {
     return taskList;
 }
 
-const sortTasks = (taskList) => {
-    return taskList;
-}
-
 function App() {
     const [allTasks, setAllTasks] = useState([]);
     const [dayTasks, setDayTasks] = useState([]);
@@ -39,6 +35,10 @@ function App() {
     const [isListFormVisible, setIsListFormVisible] = useState(false);
 
     useEffect(() => {
+        let temp = allTasks;
+
+        temp.sort((a, b) => (new Date(a.dueDate) - new Date(b.dueDate)));
+        setAllTasks(temp);
         setDayTasks(getDayTasks(allTasks));
         setWeekTasks(() => getWeekTasks(allTasks));
     }, [allTasks])
