@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import styles from "../styles/Form.module.css";
 import { AppContext } from "../App";
 
-export default function Form({ isVisible }) {
-    const { allTasks, setAllTasks, toggleForm } = useContext(AppContext);
+export default function Form() {
+    const { allTasks, isFormVisible, setAllTasks, toggleForm } = useContext(AppContext);
     const [formData, setFormData] = useState(
         {
             title: "",
@@ -39,7 +39,7 @@ export default function Form({ isVisible }) {
 
     return (
         <>
-            {isVisible &&
+            {isFormVisible &&
                 <form 
                     id={styles["task-form"]}
                     onSubmit={handleSubmit}

@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import styles from "../styles/Navbar.module.css"
+import { AppContext } from "../App";
 
 const getIcon = (title) => {
     const icons = {
@@ -21,25 +23,29 @@ function TaskOption({ title, count }) {
     );
 }
 
-export default function Navbar({ dayTasks, weekTasks, allTasks }) {
+export default function Navbar() {
+    const { dayTasks, weekTasks, isNavbarOpen, allTasks } = useContext(AppContext);
 
     return (
-        <div className={styles.navbar}>
-            <div className={styles.top}>
-                <TaskOption 
-                    title="My day" 
-                    count={() => dayTasks.length} 
-                />
-                <TaskOption 
-                    title="My week" 
-                    count={() => weekTasks.length} 
-                />
-                <TaskOption 
-                    title="All Tasks" 
-                    count={() => allTasks.length} 
-                />
+        <>{isNavbarOpen && 
+            <div className={styles.navbar}>
+                <div className={styles.top}>
+                    <TaskOption 
+                        title="My day" 
+                        count={dayTasks.length} 
+                    />
+                    <TaskOption 
+                        title="My week" 
+                        count={weekTasks.length} 
+                    />
+                    <TaskOption 
+                        title="All Tasks" 
+                        count={allTasks.length} 
+                    />
+                </div>
+                <div className={styles.bottom}></div>
             </div>
-            <div className={styles.bottom}></div>
-        </div>
+        }
+        </>
     );
 }

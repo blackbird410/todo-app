@@ -1,0 +1,28 @@
+
+.navbar {
+    position: fixed;
+    left: 0;
+    top: 10%;
+    padding: 1.5rem;
+    z-index: 3;
+    height: 100%;
+}
+
+.top {
+}
+
+.option-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+    font-size: 1.4rem;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.option-wrapper:hover {
+    background: orange;
+}

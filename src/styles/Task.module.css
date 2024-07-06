@@ -9,7 +9,7 @@ p, h2 {
     gap: 1rem;
     
     overflow-y: scroll;
-    max-height: min(500px, 50%);
+    height: min(500px, 50%);
 }
 
 .task-wrapper {
