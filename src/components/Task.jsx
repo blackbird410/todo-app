@@ -2,7 +2,7 @@ import { useContext } from "react";
 import styles from "../styles/Task.module.css";
 import { AppContext } from "../App";
 
-function Task({ title, dueDate, notes, description }) {
+function Task({ title, dueDate, notes, description, priority }) {
     const { removeTask } = useContext(AppContext);
 
     return (
@@ -12,7 +12,7 @@ function Task({ title, dueDate, notes, description }) {
                 className={styles["task-checkbox"]} 
                 onClick={removeTask}
             />
-            <h2 className={styles["title"]}>{title}</h2>
+            <h2 className={`${styles["title"]} ${styles[`priority-${priority}`]}`}>{title}</h2>
             <div className={styles["due-date"]}>{dueDate}</div>
             <p className={styles["notes"]}>{notes}</p>
             <p className={styles["description"]}>{description}</p>
@@ -30,6 +30,7 @@ export function TaskList({ tasks }) {
                     dueDate={task.dueDate} 
                     notes={task.notes}
                     description={task.description}
+                    priority={task.priority}
                 />)
             }
         </div>

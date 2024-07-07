@@ -54,3 +54,24 @@ p, h2 {
     content: "Due date: ";
     color: orange;
 }
+
+.priority-5 {
+    color: #00FF00; /* Green */
+}
+
+.priority-4 {
+    color: #ADFF2F; /* GreenYellow */
+}
+
+.priority-3 {
+    color: #FFD700; /* Gold */
+}
+
+.priority-2 {
+    color: #FF8C00; /* DarkOrange */
+}
+
+.priority-1 {
+    color: #FF0000; /* Red */
+}
+
