@@ -4,6 +4,7 @@ import './App.css'
 import Form from './components/Form';
 import Navbar from './components/Navbar';
 import UserListForm from './components/UserListForm';
+import { tasks } from './tasks';
 
 export const AppContext = createContext(null);
 
@@ -18,15 +19,19 @@ function UtilityBtn({ use }) {
 }
 
 const getDayTasks = (taskList) => {
-    return taskList;
+    return taskList.filter(
+        (item) => new Date(item.dueDate).toLocaleDateString() === new Date().toLocaleDateString());
+
 }
 
 const getWeekTasks = (taskList) => {
-    return taskList;
+    const nextWeekDeadline = new Date();
+    nextWeekDeadline.setDate(nextWeekDeadline.getDate() + 7);
+    return taskList.filter((item) => new Date(item.dueDate) < nextWeekDeadline);
 }
 
 function App() {
-    const [allTasks, setAllTasks] = useState([]);
+    const [allTasks, setAllTasks] = useState(tasks);
     const [dayTasks, setDayTasks] = useState([]);
     const [weekTasks, setWeekTasks] = useState([]);
     const [userList, setUserList] = useState([]);

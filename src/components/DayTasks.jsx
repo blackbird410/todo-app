@@ -32,12 +32,12 @@ function Header() {
             : currentTime < 17 
                 ? "Afternoon" 
                 : "Evening" ;
-    const { quote, loading } = fetchQuote();
+    const { quote, error, loading } = fetchQuote();
 
     return (
         <header>
             <h1>{`Good ${partOfDay}`}</h1>
-            <h2>{`${ loading ? "Remove doubts with action." : quote[0].content }`}</h2>
+            <h2>{`${ (loading || error) ? "Remove doubts with action." : quote[0].content }`}</h2>
         </header>
     );
 }
