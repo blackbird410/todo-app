@@ -67,10 +67,10 @@ export function Status({ type }) {
 
 
 function DayTasks() {
-    const { dayTasks, toggleForm } = useContext(AppContext);
+    const { dayTasks, setIsNavbarOpen, toggleForm } = useContext(AppContext);
     
     return (
-        <div className={styles["wrapper"]}>
+        <div className={styles["wrapper"]} onClick={() => setIsNavbarOpen(false)}>
             <Header />
             <Status type="day"/>
             <TaskList tasks={dayTasks} />

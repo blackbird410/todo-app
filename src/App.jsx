@@ -63,6 +63,8 @@ function App() {
     const [isNavbarOpen, setIsNavbarOpen] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isListFormVisible, setIsListFormVisible] = useState(false);
+    const [isDay, setIsDay] = useState(true);
+    const [isWeek, setIsWeek] = useState(false);
 
     useEffect(() => {
         let temp = allTasks;
@@ -98,6 +100,20 @@ function App() {
         );
     }
 
+    const display = (e) => {
+        let section = e.target;
+        if (section.childNodes[1]) section = e.target.parentNode.childNodes[1].textContent; 
+        else section = e.target.textContent;
+
+        if (section === "My day") {
+            setIsWeek(false);
+            setIsDay(true);
+        } else if (section === "My week") {
+            setIsDay(false);
+            setIsWeek(true);
+        }
+    }
+
     const contextValue = { 
         dayTasks, 
         weekTasks, 
@@ -112,14 +128,16 @@ function App() {
         toggleForm, 
         toggleListForm,
         removeTask,
+        display,
     };
     
     return (
         <AppContext.Provider value={contextValue}>
             <UtilityBtn use={toggleNavbar} />
-            <div className='main'>
+            <div className='main' onClick={() => setIsNavbarOpen(false)}>
                 <Navbar />
-                <WeekTasks />
+                {isDay && <DayTasks />}
+                {isWeek &&  <WeekTasks />}
                 <Form />
                 <UserListForm />
             </div>

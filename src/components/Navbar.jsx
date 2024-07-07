@@ -13,10 +13,10 @@ const getIcon = (title) => {
     return ( icons[title] ? icons[title] : "folder");
 }
 
-function TaskOption({ title, count }) {
+function TaskOption({ title, count, onClick }) {
 
     return (
-        <div className={styles["option-wrapper"]}>
+        <div className={styles["option-wrapper"]} onClick={onClick}>
             <ion-icon name={getIcon(title)}></ion-icon>
             <div>{title}</div>
             <div className={styles.count}>{count}</div>
@@ -32,7 +32,9 @@ export default function Navbar() {
         isNavbarOpen, 
         allTasks, 
         userList, 
-        toggleListForm } = useContext(AppContext);
+        toggleListForm,
+        display,
+    } = useContext(AppContext);
 
     return (
         <>{isNavbarOpen && 
@@ -41,10 +43,12 @@ export default function Navbar() {
                     <TaskOption 
                         title="My day" 
                         count={dayTasks.length} 
+                        onClick={display}
                     />
                     <TaskOption 
                         title="My week" 
                         count={weekTasks.length} 
+                        onClick={display}
                     />
                     <TaskOption 
                         title="All Tasks" 
