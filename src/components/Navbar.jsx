@@ -53,10 +53,12 @@ export default function Navbar() {
                     <TaskOption 
                         title="All Tasks" 
                         count={allTasks.length} 
+                        onClick={display}
                     />
                     <TaskOption 
                         title="Overdue Tasks"
                         count={overdueTasks.length}
+                        onClick={display}
                     />
                 </div>
                 <div className={styles.bottom}>

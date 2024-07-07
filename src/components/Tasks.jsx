@@ -1,8 +1,7 @@
-import { AppContext } from "../App";
-import styles from "../styles/Tasks.module.css"
 import { TaskList } from "./Task";
-import { useContext, useState, useEffect } from "react";
-
+import styles from "../styles/Tasks.module.css"
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "../App";
 
 const fetchQuote = () => {
     const [quote, setQuote] = useState({});
@@ -44,14 +43,29 @@ export function Header() {
 
 export function Status({ type }) {
     const [weekDay, month, day] = new Date().toString().split(" ");
-    const { dayTasks, weekTasks } = useContext(AppContext);
-    const nTasks = (type === "day" ? dayTasks.length : weekTasks.length);
+    const { dayTasks, weekTasks, allTasks, overdueTasks } = useContext(AppContext);
+    const nTasks = (
+        type === "day" 
+            ? dayTasks.length 
+            : type === "week"
+                ? weekTasks.length 
+                : type === "all" 
+                    ? allTasks.length 
+                    : overdueTasks.length
+    );
 
     const status = (!nTasks) 
         ? "no event" 
         : (nTasks === 1) 
             ? "one event" 
             : `${nTasks} events`;
+
+    const eventType = {
+        "day": "scheduled for today",
+        "week": "scheduled for the week",
+        "all": "in total",
+        "overdue": "that is overdue",
+    };
 
     return (
         <div className={`${styles['day-status']}`}>
@@ -60,20 +74,38 @@ export function Status({ type }) {
                 <div className={styles["day"]}>{day}</div>
                 <div className={styles["month"]}>{month}</div>
             </div>
-            <div className={`${styles['status']}`}>{`You have ${status} scheduled for ${ type === "day" ? "today" : "the week" }.`}</div>
+            <div className={`${styles['status']}`}>
+                {`You have ${status} ${eventType[type]}.`}
+            </div>
         </div>
     );
 }
 
+export default function Tasks({ type }) {
+    const { 
+        dayTasks, 
+        weekTasks, 
+        allTasks, 
+        overdueTasks, 
+        toggleForm 
+    } = useContext(AppContext);
 
-function DayTasks() {
-    const { dayTasks, setIsNavbarOpen, toggleForm } = useContext(AppContext);
+    const getTasks = () => {
+        const match = {
+            "day": dayTasks,
+            "week": weekTasks,
+            "all": allTasks,
+            "overdue": overdueTasks,
+        };
+
+        return (match[type] ? match[type] : []); 
+    }
     
     return (
-        <div className={styles["wrapper"]} onClick={() => setIsNavbarOpen(false)}>
+        <div className={styles["wrapper"]}>
             <Header />
-            <Status type="day"/>
-            <TaskList tasks={dayTasks} />
+            <Status type={type} />
+            <TaskList tasks={getTasks()} />
             <button 
                 className={styles["add-task-btn"]}
                 onClick={toggleForm}
@@ -83,5 +115,3 @@ function DayTasks() {
         </div>
     );
 }
-
-export default DayTasks;

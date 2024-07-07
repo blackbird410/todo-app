@@ -1,11 +1,9 @@
 import { useState, createContext, useEffect } from 'react'
-import DayTasks from "./components/DayTasks"
 import './App.css'
 import Form from './components/Form';
 import Navbar from './components/Navbar';
 import UserListForm from './components/UserListForm';
-import { tasks } from './tasks';
-import WeekTasks from './components/WeekTasks';
+import Tasks from './components/Tasks';
 
 export const AppContext = createContext(null);
 
@@ -65,6 +63,8 @@ function App() {
     const [isListFormVisible, setIsListFormVisible] = useState(false);
     const [isDay, setIsDay] = useState(true);
     const [isWeek, setIsWeek] = useState(false);
+    const [isAll, setIsAll] = useState(false);
+    const [isOverdue, setIsOverdue] = useState(false);
 
     useEffect(() => {
         let temp = allTasks;
@@ -105,12 +105,26 @@ function App() {
         if (section.childNodes[1]) section = e.target.parentNode.childNodes[1].textContent; 
         else section = e.target.textContent;
 
-        if (section === "My day") {
-            setIsWeek(false);
-            setIsDay(true);
-        } else if (section === "My week") {
+        if (section === "My week") {
+            setIsAll(false);
+            setIsOverdue(false);
             setIsDay(false);
             setIsWeek(true);
+        } else if (section === "All Tasks") {
+            setIsWeek(false);
+            setIsOverdue(false);
+            setIsDay(false);
+            setIsAll(true);
+        } else if (section === "Overdue Tasks") {
+            setIsWeek(false);
+            setIsDay(false);
+            setIsAll(false);
+            setIsOverdue(true);
+        } else {
+            setIsWeek(false);
+            setIsAll(false);
+            setIsOverdue(false);
+            setIsDay(true);
         }
     }
 
@@ -125,6 +139,7 @@ function App() {
         isListFormVisible,
         setAllTasks, 
         setUserList,
+        setIsNavbarOpen,
         toggleForm, 
         toggleListForm,
         removeTask,
@@ -136,8 +151,10 @@ function App() {
             <UtilityBtn use={toggleNavbar} />
             <div className='main' onClick={() => setIsNavbarOpen(false)}>
                 <Navbar />
-                {isDay && <DayTasks />}
-                {isWeek &&  <WeekTasks />}
+                {isDay && <Tasks type="day"/>}
+                {isWeek &&  <Tasks type="week"/>}
+                {isAll &&  <Tasks type="all"/>}
+                {isOverdue &&  <Tasks type="overdue"/>}
                 <Form />
                 <UserListForm />
             </div>
