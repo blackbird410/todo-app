@@ -30,10 +30,15 @@ const getWeekTasks = (taskList) => {
     return taskList.filter((item) => new Date(item.dueDate) < nextWeekDeadline);
 }
 
+const getOverdueTasks = (taskList) => {
+    return taskList.filter((item) => new Date(item.dueDate) < new Date());
+}
+
 function App() {
     const [allTasks, setAllTasks] = useState(tasks);
     const [dayTasks, setDayTasks] = useState([]);
     const [weekTasks, setWeekTasks] = useState([]);
+    const [overdueTasks, setOverdueTasks] = useState([]);
     const [userList, setUserList] = useState([]);
     const [isNavbarOpen, setIsNavbarOpen] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -45,6 +50,7 @@ function App() {
         temp.sort((a, b) => (new Date(a.dueDate) - new Date(b.dueDate)));
         setAllTasks(temp);
         setDayTasks(getDayTasks(allTasks));
+        setOverdueTasks(getOverdueTasks(allTasks));
         setWeekTasks(() => getWeekTasks(allTasks));
     }, [allTasks])
 
@@ -56,6 +62,7 @@ function App() {
         dayTasks, 
         weekTasks, 
         allTasks, 
+        overdueTasks,
         userList,
         isNavbarOpen,
         isFormVisible,

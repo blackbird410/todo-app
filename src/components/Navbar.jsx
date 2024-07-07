@@ -7,6 +7,7 @@ const getIcon = (title) => {
         "My day" : "today",
         "My week": "calendar",
         "All tasks": "list",
+        "Overdue Tasks": "alert-circle",
     };
 
     return ( icons[title] ? icons[title] : "folder");
@@ -24,7 +25,14 @@ function TaskOption({ title, count }) {
 }
 
 export default function Navbar() {
-    const { dayTasks, weekTasks, isNavbarOpen, allTasks, userList, toggleListForm } = useContext(AppContext);
+    const { 
+        dayTasks, 
+        weekTasks, 
+        overdueTasks,
+        isNavbarOpen, 
+        allTasks, 
+        userList, 
+        toggleListForm } = useContext(AppContext);
 
     return (
         <>{isNavbarOpen && 
@@ -41,6 +49,10 @@ export default function Navbar() {
                     <TaskOption 
                         title="All Tasks" 
                         count={allTasks.length} 
+                    />
+                    <TaskOption 
+                        title="Overdue Tasks"
+                        count={overdueTasks.length}
                     />
                 </div>
                 <div className={styles.bottom}>
