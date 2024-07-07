@@ -5,7 +5,6 @@ import Form from './components/Form';
 import Navbar from './components/Navbar';
 import UserListForm from './components/UserListForm';
 import { tasks } from './tasks';
-import { TaskList } from './components/Task';
 
 export const AppContext = createContext(null);
 
@@ -49,8 +48,13 @@ const getUserLists = (taskList) => {
     return lists;
 } 
 
+const getLocalStorageData = () => {
+    const tasks = JSON.parse(localStorage.getItem("allTasks"));
+    return (tasks) ? tasks : [];
+}
+
 function App() {
-    const [allTasks, setAllTasks] = useState(tasks);
+    const [allTasks, setAllTasks] = useState(getLocalStorageData());
     const [dayTasks, setDayTasks] = useState([]);
     const [weekTasks, setWeekTasks] = useState([]);
     const [overdueTasks, setOverdueTasks] = useState([]);
@@ -68,6 +72,8 @@ function App() {
         setOverdueTasks(getOverdueTasks(allTasks));
         setWeekTasks(() => getWeekTasks(allTasks));
         setUserList(getUserLists(allTasks));
+
+        localStorage.setItem("allTasks", JSON.stringify(allTasks));
     }, [allTasks])
 
     const toggleNavbar = () => setIsNavbarOpen(!isNavbarOpen);
