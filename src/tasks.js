@@ -6,7 +6,7 @@ export const tasks = [
         notes: "Focus on creating a solid foundation",
         priority: "1",
         title: "Build react app",
-        checklist: "Create components, Set up state management, Initial styling",
+        checklist: "Work",
     },
     {
         description: "Design the main user interface",
@@ -14,7 +14,7 @@ export const tasks = [
         notes: "Ensure UI is intuitive and user-friendly",
         priority: "2",
         title: "Design UI",
-        checklist: "Sketch wireframes, Create mockups, Get feedback",
+        checklist: "Work",
     },
     {
         description: "Integrate API for data fetching",
@@ -22,7 +22,7 @@ export const tasks = [
         notes: "Secure and efficient API integration",
         priority: "1",
         title: "Integrate API",
-        checklist: "Set up Axios, Handle errors, Test API calls",
+        checklist: "Work",
     },
     {
         description: "Write unit tests for components",
@@ -30,7 +30,7 @@ export const tasks = [
         notes: "Cover all possible edge cases",
         priority: "2",
         title: "Write unit tests",
-        checklist: "Install testing library, Write tests, Run tests",
+        checklist: "Work",
     },
     {
         description: "Deploy the application to production",
@@ -38,7 +38,7 @@ export const tasks = [
         notes: "Monitor deployment for any issues",
         priority: "1",
         title: "Deploy app",
-        checklist: "Build for production, Deploy to server, Verify deployment",
+        checklist: "Work",
     },
     {
         description: "Conduct a code review session",
@@ -46,6 +46,14 @@ export const tasks = [
         notes: "Focus on code quality and best practices",
         priority: "2",
         title: "Code review",
-        checklist: "Review PRs, Provide feedback, Merge approved code",
+        checklist: "Work",
+    },
+    {
+        description: "Visit Taipei",
+        dueDate: "7/15/2024, 8:00:00 AM",
+        notes: "Enjoy life while it lasts",
+        priority: "3",
+        title: "Tourism",
+        checklist: "Personal",
     },
 ];

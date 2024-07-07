@@ -5,6 +5,7 @@ import Form from './components/Form';
 import Navbar from './components/Navbar';
 import UserListForm from './components/UserListForm';
 import { tasks } from './tasks';
+import { TaskList } from './components/Task';
 
 export const AppContext = createContext(null);
 
@@ -34,12 +35,26 @@ const getOverdueTasks = (taskList) => {
     return taskList.filter((item) => new Date(item.dueDate) < new Date());
 }
 
+const getUserLists = (taskList) => {
+    let lists = {}; 
+    
+    taskList.forEach(element => {
+        if (!lists.hasOwnProperty(element.checklist)) {
+            lists[element.checklist] = 
+                taskList.filter(
+                    item => item.checklist === element.checklist).length; 
+        }
+    });
+
+    return lists;
+} 
+
 function App() {
     const [allTasks, setAllTasks] = useState(tasks);
     const [dayTasks, setDayTasks] = useState([]);
     const [weekTasks, setWeekTasks] = useState([]);
     const [overdueTasks, setOverdueTasks] = useState([]);
-    const [userList, setUserList] = useState([]);
+    const [userList, setUserList] = useState({});
     const [isNavbarOpen, setIsNavbarOpen] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isListFormVisible, setIsListFormVisible] = useState(false);
@@ -52,6 +67,7 @@ function App() {
         setDayTasks(getDayTasks(allTasks));
         setOverdueTasks(getOverdueTasks(allTasks));
         setWeekTasks(() => getWeekTasks(allTasks));
+        setUserList(getUserLists(allTasks));
     }, [allTasks])
 
     const toggleNavbar = () => setIsNavbarOpen(!isNavbarOpen);
