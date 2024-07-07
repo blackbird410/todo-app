@@ -13,7 +13,8 @@ export default function UserListForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let temp = [...userList, title];
+        let temp = {...userList };
+        temp[title] = 0;
         setUserList(temp);
         toggleListForm();
     }
