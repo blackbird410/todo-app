@@ -73,6 +73,23 @@ function App() {
     const toggleNavbar = () => setIsNavbarOpen(!isNavbarOpen);
     const toggleForm = () => setIsFormVisible(!isFormVisible);
     const toggleListForm = () => setIsListFormVisible(!isListFormVisible);
+    const removeTask = (e) => {
+        const target = e.target.parentNode;
+
+        const title = target.childNodes[1].textContent;
+        const dueDate = new Date(target.childNodes[2].textContent);
+        const notes = target.childNodes[3].textContent;
+        const description = target.childNodes[4].textContent;
+
+        setAllTasks(allTasks
+            .filter(item => 
+                (item.title !== title 
+                    && new Date(item.dueDate) !== dueDate 
+                    && item.notes !== notes 
+                    && item.description !== description)
+            )
+        );
+    }
 
     const contextValue = { 
         dayTasks, 
@@ -87,6 +104,7 @@ function App() {
         setUserList,
         toggleForm, 
         toggleListForm,
+        removeTask,
     };
     
     return (

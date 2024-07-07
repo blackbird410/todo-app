@@ -1,11 +1,16 @@
+import { useContext } from "react";
 import styles from "../styles/Task.module.css";
+import { AppContext } from "../App";
 
 function Task({ title, dueDate, notes, description }) {
+    const { removeTask } = useContext(AppContext);
+
     return (
         <div className={styles["task-wrapper"]}>
             <input 
                 type="checkbox" 
                 className={styles["task-checkbox"]} 
+                onClick={removeTask}
             />
             <h2 className={styles["title"]}>{title}</h2>
             <div className={styles["due-date"]}>{dueDate}</div>
