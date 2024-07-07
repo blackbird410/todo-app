@@ -5,6 +5,7 @@ import Form from './components/Form';
 import Navbar from './components/Navbar';
 import UserListForm from './components/UserListForm';
 import { tasks } from './tasks';
+import WeekTasks from './components/WeekTasks';
 
 export const AppContext = createContext(null);
 
@@ -118,7 +119,7 @@ function App() {
             <UtilityBtn use={toggleNavbar} />
             <div className='main'>
                 <Navbar />
-                <DayTasks />
+                <WeekTasks />
                 <Form />
                 <UserListForm />
             </div>

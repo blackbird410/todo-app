@@ -23,7 +23,7 @@ const fetchQuote = () => {
     return { quote, error, loading };
 };
 
-function Header() {
+export function Header() {
     const currentTime = new Date().getHours();
     const partOfDay = (currentTime < 4 || currentTime > 22) 
         ? "Night" 
@@ -42,10 +42,10 @@ function Header() {
     );
 }
 
-function DayStatus() {
+export function Status({ type }) {
     const [weekDay, month, day] = new Date().toString().split(" ");
-    const { dayTasks } = useContext(AppContext);
-    const nTasks = dayTasks.length;
+    const { dayTasks, weekTasks } = useContext(AppContext);
+    const nTasks = (type === "day" ? dayTasks.length : weekTasks.length);
 
     const status = (!nTasks) 
         ? "no event" 
@@ -60,7 +60,7 @@ function DayStatus() {
                 <div className={styles["day"]}>{day}</div>
                 <div className={styles["month"]}>{month}</div>
             </div>
-            <div className={`${styles['status']}`}>{`You have ${status} scheduled for today.`}</div>
+            <div className={`${styles['status']}`}>{`You have ${status} scheduled for ${ type === "day" ? "today" : "the week" }.`}</div>
         </div>
     );
 }
@@ -72,7 +72,7 @@ function DayTasks() {
     return (
         <div className={styles["wrapper"]}>
             <Header />
-            <DayStatus />
+            <Status type="day"/>
             <TaskList tasks={dayTasks} />
             <button 
                 className={styles["add-task-btn"]}
