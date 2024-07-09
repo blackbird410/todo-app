@@ -10,8 +10,7 @@ p, h2 {
     padding: 1rem;
     
     overflow-y: scroll;
-    max-height: 450px;
-    min-height: 300px;
+    max-height: 40vh;
 }
 
 .task-wrapper {

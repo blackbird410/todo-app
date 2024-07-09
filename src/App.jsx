@@ -37,7 +37,7 @@ const getUserLists = (taskList) => {
     let lists = {}; 
     
     taskList.forEach(element => {
-        if (!lists.hasOwnProperty(element.checklist)) {
+        if (!lists.hasOwnProperty(element.checklist) && element.checklist) {
             lists[element.checklist] = 
                 taskList.filter(
                     item => item.checklist === element.checklist).length; 
