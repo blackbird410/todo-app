@@ -145,8 +145,7 @@ function App() {
             setIsOverdue(false);
             setIsDay(true);
             setCurrentList("");
-        } else {
-            // Display the tasks corresponding to a specific user lists
+        } else if (Object.keys(userList).includes(section)) {
             setIsWeek(false);
             setIsAll(false);
             setIsOverdue(false);
