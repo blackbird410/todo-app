@@ -79,6 +79,7 @@ function App() {
     const [isWeek, setIsWeek] = useState(false);
     const [isAll, setIsAll] = useState(false);
     const [isOverdue, setIsOverdue] = useState(false);
+    const [currentList, setCurrentList] = useState("");
     const [selectedDay, setSelectedDay] = useState(DAYS[0]);
 
     useEffect(() => {
@@ -125,21 +126,32 @@ function App() {
             setIsOverdue(false);
             setIsDay(false);
             setIsWeek(true);
+            setCurrentList("");
         } else if (section === "All Tasks") {
             setIsWeek(false);
             setIsOverdue(false);
             setIsDay(false);
             setIsAll(true);
+            setCurrentList("");
         } else if (section === "Overdue Tasks") {
             setIsWeek(false);
             setIsDay(false);
             setIsAll(false);
             setIsOverdue(true);
-        } else {
+            setCurrentList("");
+        } else if (section === "My day") {
             setIsWeek(false);
             setIsAll(false);
             setIsOverdue(false);
             setIsDay(true);
+            setCurrentList("");
+        } else {
+            // Display the tasks corresponding to a specific user lists
+            setIsWeek(false);
+            setIsAll(false);
+            setIsOverdue(false);
+            setIsDay(false);
+            setCurrentList(section);
         }
     }
 
@@ -172,6 +184,7 @@ function App() {
         selectedDay,
         handleSelectDay,
         currentWeek,
+        currentList,
     };
     
     return (
@@ -183,6 +196,7 @@ function App() {
                 {isWeek &&  <Tasks type="week"/>}
                 {isAll &&  <Tasks type="all"/>}
                 {isOverdue &&  <Tasks type="overdue"/>}
+                {!!currentList && <Tasks type={currentList}/>}
                 <Form />
                 <UserListForm />
             </div>

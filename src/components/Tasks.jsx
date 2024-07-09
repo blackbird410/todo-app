@@ -1,8 +1,7 @@
 import { TaskList } from "./Task";
 import styles from "../styles/Tasks.module.css"
 import { useContext, useEffect, useState } from "react";
-import { AppContext, DAYS } from "../App";
-import { getCurrentWeek } from "../App";
+import { AppContext } from "../App";
 
 const fetchQuote = () => {
     const [quote, setQuote] = useState({});
@@ -44,15 +43,19 @@ export function Header() {
 
 export function Status({ type }) {
     const [weekDay, month, day] = new Date().toString().split(" ");
-    const { dayTasks, weekTasks, allTasks, overdueTasks } = useContext(AppContext);
+    const { dayTasks, weekTasks, allTasks, overdueTasks, userList } = useContext(AppContext);
+
+    const eventCount = {
+        "day": dayTasks.length,
+        "week": weekTasks.length,
+        "all": allTasks.length,
+        "overdue": overdueTasks.length,
+    };
+
     const nTasks = (
-        type === "day" 
-            ? dayTasks.length 
-            : type === "week"
-                ? weekTasks.length 
-                : type === "all" 
-                    ? allTasks.length 
-                    : overdueTasks.length
+        Object.keys(eventCount).includes(type) 
+            ? eventCount[type] 
+            : userList[type]
     );
 
     const status = (!nTasks) 
@@ -76,7 +79,7 @@ export function Status({ type }) {
                 <div className={styles["month"]}>{month}</div>
             </div>
             <div className={`${styles['status']}`}>
-                {`You have ${status} ${eventType[type]}.`}
+                {`You have ${status} ${eventType[type] ? eventType[type] : `in the ${type} list`}.`}
             </div>
         </div>
     );
@@ -104,13 +107,13 @@ export function DaySelector() {
 export default function Tasks({ type }) {
     const { 
         dayTasks, 
-        weekTasks, 
         allTasks, 
         overdueTasks, 
         toggleForm,
         isWeek,
         currentWeek,
         selectedDay,
+        currentList
     } = useContext(AppContext);
 
     const getTasks = () => {
@@ -120,15 +123,22 @@ export default function Tasks({ type }) {
             "overdue": overdueTasks,
         };
 
+        if (Object.keys(match).includes(type)) return (match[type] ? match[type] : []); 
+
         if (type === "week") {
             // Get the tasks for the selected day
             const targetDate = new Date();
-            targetDate.setDate(targetDate.getDate() + currentWeek.findIndex((day) => day === selectedDay));
+            targetDate
+                .setDate(targetDate.getDate() + currentWeek.findIndex(
+                    (day) => day === selectedDay));
 
-            return allTasks.filter((task) => new Date(task.dueDate).toLocaleDateString() === targetDate.toLocaleDateString()) 
+            return allTasks.filter(
+                (task) => new Date(task.dueDate)
+                    .toLocaleDateString() === targetDate.toLocaleDateString()) 
         }
 
-        return (match[type] ? match[type] : []); 
+        // A personal user list
+        return allTasks.filter((task) => task.checklist === currentList);
     }
     
     return (

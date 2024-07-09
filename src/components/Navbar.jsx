@@ -66,7 +66,14 @@ export default function Navbar() {
                         <div>My lists</div>
                         <ion-icon name="add-circle" onClick={toggleListForm}></ion-icon>
                     </header>
-                    {Object.keys(userList).map((checklist) => <TaskOption key={checklist} title={checklist} count={userList[checklist]} />)}
+                    {Object.keys(userList)
+                        .map((checklist) => 
+                            <TaskOption 
+                                key={checklist} 
+                                title={checklist} 
+                                count={userList[checklist]} 
+                                onClick={display}
+                            />)}
                 </div>
             </div>
         }
