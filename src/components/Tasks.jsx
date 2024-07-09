@@ -1,7 +1,8 @@
 import { TaskList } from "./Task";
 import styles from "../styles/Tasks.module.css"
 import { useContext, useEffect, useState } from "react";
-import { AppContext } from "../App";
+import { AppContext, DAYS } from "../App";
+import { getCurrentWeek } from "../App";
 
 const fetchQuote = () => {
     const [quote, setQuote] = useState({});
@@ -81,22 +82,51 @@ export function Status({ type }) {
     );
 }
 
+export function DaySelector() {
+    const { handleSelectDay, currentWeek } = useContext(AppContext);
+
+    return (
+        <div className={styles["day-select-wrapper"]}>
+            <label htmlFor={styles["day-select"]}>Day of the week:</label>
+            <select id={styles["day-select"]}>
+                {currentWeek.map((day) => 
+                    <option 
+                        key={day}
+                        value={day}
+                        className={styles["day-select-btn"]}
+                        onClick={handleSelectDay}
+                    >{day}</option>)}
+            </select>
+        </div>
+    );
+}
+
 export default function Tasks({ type }) {
     const { 
         dayTasks, 
         weekTasks, 
         allTasks, 
         overdueTasks, 
-        toggleForm 
+        toggleForm,
+        isWeek,
+        currentWeek,
+        selectedDay,
     } = useContext(AppContext);
 
     const getTasks = () => {
         const match = {
             "day": dayTasks,
-            "week": weekTasks,
             "all": allTasks,
             "overdue": overdueTasks,
         };
+
+        if (type === "week") {
+            // Get the tasks for the selected day
+            const targetDate = new Date();
+            targetDate.setDate(targetDate.getDate() + currentWeek.findIndex((day) => day === selectedDay));
+
+            return allTasks.filter((task) => new Date(task.dueDate).toLocaleDateString() === targetDate.toLocaleDateString()) 
+        }
 
         return (match[type] ? match[type] : []); 
     }
@@ -105,6 +135,7 @@ export default function Tasks({ type }) {
         <div className={styles["wrapper"]}>
             <Header />
             <Status type={type} />
+            {isWeek && <DaySelector /> }
             <TaskList tasks={getTasks()} />
             <button 
                 className={styles["add-task-btn"]}

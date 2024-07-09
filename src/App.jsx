@@ -52,6 +52,20 @@ const getLocalStorageData = () => {
     return (tasks) ? tasks : [];
 }
 
+export const DAYS = [ "Monday", "Tuesday", "Wednesday", 
+    "Thursday", "Friday", "Saturday", "Sunday"];
+
+export const getCurrentWeek = () => {
+    let currentWeek = [];
+    let i = new Date().getDay() - 1;
+    while(currentWeek.length < 7) {
+        currentWeek.push(DAYS[i % 7]);
+        i += 1;
+    }
+
+    return currentWeek;
+}
+
 function App() {
     const [allTasks, setAllTasks] = useState(getLocalStorageData());
     const [dayTasks, setDayTasks] = useState([]);
@@ -65,6 +79,7 @@ function App() {
     const [isWeek, setIsWeek] = useState(false);
     const [isAll, setIsAll] = useState(false);
     const [isOverdue, setIsOverdue] = useState(false);
+    const [selectedDay, setSelectedDay] = useState(DAYS[0]);
 
     useEffect(() => {
         let temp = allTasks;
@@ -128,6 +143,15 @@ function App() {
         }
     }
 
+    const handleSelectDay = (e) => {
+        const day = e.target.value;
+        if (day !== selectedDay) {
+            setSelectedDay(day);
+        }
+    }
+
+    const currentWeek = getCurrentWeek();
+
     const contextValue = { 
         dayTasks, 
         weekTasks, 
@@ -136,6 +160,7 @@ function App() {
         userList,
         isNavbarOpen,
         isFormVisible,
+        isWeek,
         isListFormVisible,
         setAllTasks, 
         setUserList,
@@ -144,6 +169,9 @@ function App() {
         toggleListForm,
         removeTask,
         display,
+        selectedDay,
+        handleSelectDay,
+        currentWeek,
     };
     
     return (

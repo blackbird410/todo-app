@@ -45,4 +45,15 @@ h1::after {
     border-color: orange;
 }
 
+.day-select-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    
+    font-size: 1.3rem;
+}
 
+.day-select-wrapper > label {
+    color: orange;
+}
