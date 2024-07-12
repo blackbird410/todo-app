@@ -9,11 +9,14 @@ export const AppContext = createContext(null);
 
 function UtilityBtn({ use }) {
     return (
-        <ion-icon 
-            name="options" 
-            id="utility-btn" 
-            onClick={use}
-        ></ion-icon>
+        <div 
+            className='flex justify-center btn fixed left-10 top-6 z-50 hover:bg-primary p-2 rounded-full text-4xl'>
+            <ion-icon 
+                name="options" 
+                id="utility-btn" 
+                onClick={use}
+            ></ion-icon>
+        </div>
     );
 }
 
@@ -188,16 +191,18 @@ function App() {
     
     return (
         <AppContext.Provider value={contextValue}>
-            <UtilityBtn use={toggleNavbar} />
-            <div className='main' onClick={() => setIsNavbarOpen(false)}>
-                <Navbar />
-                {isDay && <Tasks type="day"/>}
-                {isWeek &&  <Tasks type="week"/>}
-                {isAll &&  <Tasks type="all"/>}
-                {isOverdue &&  <Tasks type="overdue"/>}
-                {!!currentList && <Tasks type={currentList}/>}
-                <Form />
-                <UserListForm />
+            <div className='h-screen text-white'>
+                <UtilityBtn use={toggleNavbar} />
+                <div className='main' onClick={() => setIsNavbarOpen(false)}>
+                    <Navbar />
+                    {isDay && <Tasks type="day"/>}
+                    {isWeek &&  <Tasks type="week"/>}
+                    {isAll &&  <Tasks type="all"/>}
+                    {isOverdue &&  <Tasks type="overdue"/>}
+                    {!!currentList && <Tasks type={currentList}/>}
+                    <Form />
+                    <UserListForm />
+                </div>
             </div>
         </AppContext.Provider>
     );

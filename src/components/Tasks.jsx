@@ -1,5 +1,4 @@
 import { TaskList } from "./Task";
-import styles from "../styles/Tasks.module.css"
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../App";
 
@@ -34,9 +33,9 @@ export function Header() {
     const { quote, error, loading } = fetchQuote();
 
     return (
-        <header>
-            <h1>{`Good ${partOfDay}`}</h1>
-            <h2>{`${ (loading || error) ? "Remove doubts with action." : quote[0].content }`}</h2>
+        <header className="mt-2 flex flex-col border-b-2 p-4 gap-3 text-justify">
+            <h1 className="text-5xl font-semibold after:content-['.'] after:text-primary">{`Good ${partOfDay}`}</h1>
+            <h2 className="text-xl">{`${ (loading || error) ? "Remove doubts with action." : quote[0].content }`}</h2>
         </header>
     );
 }
@@ -68,17 +67,17 @@ export function Status({ type }) {
         "day": "scheduled for today",
         "week": "scheduled for the week",
         "all": "in total",
-        "overdue": "that is overdue",
+        "overdue": `that ${nTasks > 1 ? "are" : "is"} overdue`,
     };
 
     return (
-        <div className={`${styles['day-status']}`}>
-            <div className={styles['date-wrapper']}>
-                <div className={styles["day-of-week"]}>{weekDay}</div>
-                <div className={styles["day"]}>{day}</div>
-                <div className={styles["month"]}>{month}</div>
+        <div className="grid grid-cols-4 p-4 justify-between items-center">
+            <div className="flex flex-col gap-1">
+                <div className="text-xl">{weekDay}</div>
+                <div className="text-primary text-5xl">{day}</div>
+                <div className="text-xl">{month}</div>
             </div>
-            <div className={`${styles['status']}`}>
+            <div className="col-span-3 text-lg">
                 {`You have ${status} ${eventType[type] ? eventType[type] : `in the ${type} list`}.`}
             </div>
         </div>
@@ -87,18 +86,26 @@ export function Status({ type }) {
 
 export function DaySelector() {
     const { handleSelectDay, currentWeek } = useContext(AppContext);
+    let modifiedWeek = ["", ...currentWeek];
 
     return (
-        <div className={styles["day-select-wrapper"]}>
-            <label htmlFor={styles["day-select"]}>Day of the week:</label>
-            <select id={styles["day-select"]}>
-                {currentWeek.map((day) => 
-                    <option 
+        <div className="flex gap-4 justify-center text-lg">
+            <label htmlFor="day-select" className="text-primary font-thin">Day of the week:</label>
+            <select id="day-select" className="p-2 rounded-md text-black">
+                {modifiedWeek.map((day) => 
+                    day 
+                        ? <option 
                         key={day}
                         value={day}
-                        className={styles["day-select-btn"]}
-                        onClick={handleSelectDay}
-                    >{day}</option>)}
+                        onClick={handleSelectDay}>{day}</option> 
+                        : <option 
+                            key="default" 
+                            value={day}
+                            selected={true}
+                            disabled={true}
+                            hidden={true}
+                        >Choose here</option>
+                )}
             </select>
         </div>
     );
@@ -137,18 +144,17 @@ export default function Tasks({ type }) {
                     .toLocaleDateString() === targetDate.toLocaleDateString()) 
         }
 
-        // A personal user list
         return allTasks.filter((task) => task.checklist === currentList);
     }
     
     return (
-        <div className={styles["wrapper"]}>
+        <div className="flex flex-col gap-4 p-4 mt-8">
             <Header />
             <Status type={type} />
             {isWeek && <DaySelector /> }
             <TaskList tasks={getTasks()} />
             <button 
-                className={styles["add-task-btn"]}
+                className="btn bg-primary rounded p-2 font-bold text-xl hover:bg-gray-400 hover:text-white" 
                 onClick={toggleForm}
             >
                 New Task

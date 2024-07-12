@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import styles from "../styles/Navbar.module.css"
 import { AppContext } from "../App";
 
 const getIcon = (title) => {
@@ -16,10 +15,10 @@ const getIcon = (title) => {
 function TaskOption({ title, count, onClick }) {
 
     return (
-        <div className={styles["option-wrapper"]} onClick={onClick}>
+        <div className="task-option shadow-gray-200" onClick={onClick}>
             <ion-icon name={getIcon(title)}></ion-icon>
-            <div>{title}</div>
-            <div className={styles.count}>{count}</div>
+            <div className="font-sans">{title}</div>
+            <div className="text-inherit">{count}</div>
         </div>
     );
 }
@@ -38,8 +37,8 @@ export default function Navbar() {
 
     return (
         <>{isNavbarOpen && 
-            <div className={styles.navbar}>
-                <div className={styles.top}>
+            <div className="navbar">
+                <div className="flex flex-col gap-4">
                     <TaskOption 
                         title="My day" 
                         count={dayTasks.length} 
@@ -61,8 +60,8 @@ export default function Navbar() {
                         onClick={display}
                     />
                 </div>
-                <div className={styles.bottom}>
-                    <header>
+                <div className="flex flex-col gap-4 overflow-y-scroll max-h-200">
+                    <header className="flex gap-2 justify-between text-2xl p-4 border-b-2 border-primary items-center">
                         <div>My lists</div>
                         <ion-icon name="add-circle" onClick={toggleListForm}></ion-icon>
                     </header>

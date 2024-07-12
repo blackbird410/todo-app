@@ -1,67 +1,60 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+#root {
+    padding: 0;
+    max-width: 1280px;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  min-width: 320px;
-  min-height: 100vh;
+    background-color: #232323;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.task-option {
+    @apply text-xl text-white flex justify-between items-center px-4 py-2 gap-4 hover:bg-primary rounded-2xl btn;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.main {
+    @apply min-w-full h-full;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.btn {
+    @apply transition ease-out duration-300 cursor-pointer;
+}
+
+.input-wrapper {
+    @apply flex gap-4 items-center p-3;
+}
+
+.btn-wrapper {
+    @apply flex gap-8 items-center p-3;
+}
+
+.backdrop-element {
+    @apply backdrop-filter backdrop-grayscale backdrop-blur-md backdrop-contrast-200;
+}
+
+.card {
+    @apply bg-gray-800 hover:shadow-inner transform hover:bg-opacity-50 btn;
+}
+
+.form {
+    @apply backdrop-element flex flex-col gap-3 z-50 fixed justify-center w-full h-full items-center;
+}
+
+.form-btn {
+    @apply btn px-8 py-2 rounded-xl font-bold hover:bg-indigo-50 hover:text-primary;
+}
+
+.form-input {
+    @apply rounded-lg pl-4 pr-1 text-black text-base;
+}
+
+.navbar {
+    @apply fixed left-0 top-20 p-4 z-20 h-full backdrop-element border-r-2 border-white rounded-r-lg;
+}
+
+.priority-1 {
+    @apply text-priority-5;
 }
