@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { AppContext } from "../App";
-import styles from "../styles/Form.module.css";
 
 export default function UserListForm() {
     const { userList, isListFormVisible, setUserList, toggleListForm } = useContext(AppContext);
@@ -22,32 +21,36 @@ export default function UserListForm() {
     return (
         <>{isListFormVisible && 
             <form
-                    id={styles["task-form"]}
-                    onSubmit={handleSubmit}
+                className="form"
+                id="list-form"
+                onSubmit={handleSubmit}
             >
-                    <div className={styles["input-wrapper"]}>
-                        <label htmlFor="checklist">List title</label>
-                        <input 
-                            id="checklist" 
-                            name="checklist"
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className={styles['btn-wrapper']}>
-                        <button 
-                            id={styles["save-btn"]} 
-                            type="submit" 
-                        >
-                            Add list
-                        </button>
-                        <button 
-                            id={styles["cancel-btn"]} 
-                            onClick={toggleListForm}
-                            type="button"
-                        >
-                            Cancel
-                        </button>
-                    </div>
+                <div className="input-wrapper">
+                    <label htmlFor="checklist">List title</label>
+                    <input 
+                        className="form-input"
+                        id="checklist" 
+                        name="checklist"
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="btn-wrapper">
+                    <button 
+                        className="form-btn bg-primary"
+                        id="save-btn"
+                        type="submit" 
+                    >
+                        Add list
+                    </button>
+                    <button 
+                        className="form-btn bg-red-600"
+                        id="cancel-btn" 
+                        onClick={toggleListForm}
+                        type="button"
+                    >
+                        Cancel
+                    </button>
+                </div>
             </form>
         }
         </>

@@ -11,16 +11,3 @@
     justify-content: center;
 }
 
-#utility-btn {
-    position: fixed;
-    left: 2rem;
-    z-index: 5;
-
-    font-size: 2rem;
-    padding: 0.4rem;
-    border-radius: 50%;
-}
-
-#utility-btn:hover {
-    background: orange;
-}

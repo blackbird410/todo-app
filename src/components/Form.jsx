@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import styles from "../styles/Form.module.css";
 import { AppContext } from "../App";
 
 export default function Form() {
@@ -41,28 +40,32 @@ export default function Form() {
         <>
             {isFormVisible &&
                 <form 
-                    id={styles["task-form"]}
+                    className="form"
+                    id="task-form"
                     onSubmit={handleSubmit}
                 >
-                    <div className={styles["input-wrapper"]}>
+                    <div className="input-wrapper">
                         <label htmlFor="title">Title</label>
                         <input 
+                            className="form-input"
                             id="title" 
                             name="title"
                             onChange={handleChange}
                         />
                     </div>
-                    <div className={styles["input-wrapper"]}>
+                    <div className="input-wrapper">
                         <label htmlFor="description">Description</label>
                         <input 
+                            className="form-input"
                             id="description" 
                             name="description"
                             onChange={handleChange}
                         />
                     </div>
-                    <div className={styles["input-wrapper"]}>
+                    <div className="input-wrapper">
                         <label htmlFor="due-date">Due date</label>
                         <input 
+                            className="form-input"
                             id="due-date" 
                             name="due-date" 
                             type="datetime-local"
@@ -70,9 +73,10 @@ export default function Form() {
                             onChange={handleChange}
                         />
                     </div>
-                    <div className={styles["input-wrapper"]}>
+                    <div className="input-wrapper">
                         <label htmlFor="priority">Priority</label>
                         <input 
+                            className="form-input"
                             id="priority" 
                             name="priority" 
                             type="number" 
@@ -81,31 +85,35 @@ export default function Form() {
                             onChange={handleChange}
                         />
                     </div>
-                    <div className={styles["input-wrapper"]}>
+                    <div className="input-wrapper">
                         <label htmlFor="notes">Notes</label>
                         <input 
+                            className="form-input"
                             id="notes" 
                             name="notes"
                             onChange={handleChange}
                         />
                     </div>
-                    <div className={styles["input-wrapper"]}>
+                    <div className="input-wrapper">
                         <label htmlFor="checklist">Checklist</label>
                         <input 
+                            className="form-input"
                             id="checklist" 
                             name="checklist"
                             onChange={handleChange}
                         />
                     </div>
-                    <div className={styles['btn-wrapper']}>
+                    <div className="btn-wrapper">
                         <button 
-                            id={styles["save-btn"]} 
+                            className="form-btn bg-primary"
+                            id="save-btn" 
                             type="submit" 
                         >
                             Save
                         </button>
                         <button 
-                            id={styles["cancel-btn"]} 
+                            className="form-btn bg-red-600"
+                            id="cancel-btn" 
                             onClick={toggleForm}
                             type="button"
                         >
