@@ -154,7 +154,7 @@ export default function Tasks({ type }) {
     }
     
     return (
-        <div className="flex flex-col gap-4 p-4 mt-8">
+        <div className="flex flex-col gap-4 p-4 mt-8 animate-appear">
             <Header />
             <Status type={type} />
             {isWeek && <DaySelector /> }

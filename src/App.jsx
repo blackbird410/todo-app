@@ -26,7 +26,6 @@ function UtilityBtn() {
 }
 
 function App() {
-    const dispatch = useDispatch();
     const allTasks = useSelector(state => state.task.allTasks); 
     const isDay = useSelector(state => state.task.isDay);
     const isWeek = useSelector(state => state.task.isWeek);
@@ -36,14 +35,12 @@ function App() {
     const isFormVisible = useSelector(state => state.task.isFormVisible);
     const isListFormVisible = useSelector(state => state.task.isListFormVisible);
 
-    //console.log(allTasks);
-
     useEffect(() => {
         localStorage.setItem("allTasks", JSON.stringify(allTasks))
     }, [allTasks])
     
     return (
-        <div className='h-screen text-white'>
+        <div className='h-screen text-white animate-appear'>
             <UtilityBtn />
             <div className='main'>
                 <Navbar />

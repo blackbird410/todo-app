@@ -40,7 +40,7 @@ body {
 }
 
 .form {
-    @apply backdrop-element flex flex-col gap-3 z-50 fixed justify-center w-full h-full items-center;
+    @apply backdrop-element flex flex-col gap-3 z-50 fixed justify-center w-full h-full items-center animate-appear; 
 }
 
 .form-btn {

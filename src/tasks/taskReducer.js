@@ -40,9 +40,6 @@ const initialState = {
 
 
 const taskReducer = (state = initialState, action) => {
-    console.log("Current state: ", state.isFormVisible);
-    console.log("Action: ", action);
-
     switch(action.type) {
         case ADD_TASK:{ 
             const tasks = [...state.allTasks, action.payload];
@@ -117,11 +114,6 @@ const taskReducer = (state = initialState, action) => {
             isListFormVisible: !state.isListFormVisible,
         }
         case DISPLAY: {
-            console.log(action.payload);
-            // let section = action.payload;
-            // if (section.childNodes[1]) section = action.payload.target.parentNode.childNodes[1].textContent; 
-            // else section = action.payload.target.textContent;
-
             switch(action.payload) {
                 case "My day": return {
                     ...state,
