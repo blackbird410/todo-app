@@ -92,14 +92,15 @@ export function Status({ type }) {
 
 export function DaySelector() {
     const dispatch = useDispatch();
-    let modifiedWeek = ["", ...getCurrentWeek()];
+    const currentWeek = useSelector(state => state.task.currentWeek);
+    let modifiedWeek = ["", ...currentWeek];
     
     const onSelectDay = (e) => dispatch(setSelectedDay(e.target.value));
 
     return (
         <div className="flex gap-4 justify-center text-lg">
             <label htmlFor="day-select" className="text-primary font-thin">Day of the week:</label>
-            <select id="day-select" className="p-2 rounded-md text-black">
+            <select id="day-select" defaultValue={"DEFAULT"} className="p-2 rounded-md text-black">
                 {modifiedWeek.map((day) => 
                     day 
                         ? <option 
@@ -108,7 +109,7 @@ export function DaySelector() {
                         onClick={onSelectDay}>{day}</option> 
                         : <option 
                             key="default" 
-                            value={day}
+                            value="DEFAULT"
                             disabled={true}
                             hidden={true}
                         >Choose here</option>

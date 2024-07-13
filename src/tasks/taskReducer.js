@@ -162,8 +162,8 @@ const taskReducer = (state = initialState, action) => {
                             isWeek: false,
                             isAll: false,
                             isOverdue: false,
-                            isDay: true,
-                            currentList: "",
+                            isDay: false,
+                            currentList: action.payload,
                         };
                     } else {
                         return state;
