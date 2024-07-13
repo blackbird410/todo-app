@@ -102,7 +102,7 @@ const taskReducer = (state = initialState, action) => {
         }
         case SET_SELECTED_DAY: return {
             ...state, 
-            selectedDay: action.payload.target.value,
+            selectedDay: action.payload,
         }
         case TOGGLE_NAVBAR: return {
             ...state,
@@ -156,7 +156,7 @@ const taskReducer = (state = initialState, action) => {
                     currentList: "",
                 } 
                 default: {
-                    if (Object.keys(state.userList).includes(section)) {
+                    if (Object.keys(state.userList).includes(action.payload)) {
                         return {
                             ...state,
                             isWeek: false,

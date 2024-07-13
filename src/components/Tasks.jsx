@@ -94,7 +94,7 @@ export function DaySelector() {
     const dispatch = useDispatch();
     let modifiedWeek = ["", ...getCurrentWeek()];
     
-    const onSelectDay = (e) => dispatch(setSelectedDay(e));
+    const onSelectDay = (e) => dispatch(setSelectedDay(e.target.value));
 
     return (
         <div className="flex gap-4 justify-center text-lg">
