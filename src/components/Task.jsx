@@ -1,16 +1,17 @@
-import { useContext } from "react";
 import styles from "../styles/Task.module.css";
-import { AppContext } from "../App";
+import { removeTask } from "../tasks/taskActions";
+import { useDispatch } from "react-redux";
 
 function Task({ title, dueDate, notes, description, priority }) {
-    const { removeTask } = useContext(AppContext);
+    const dispatch = useDispatch();
+    const onRemove = (e) => dispatch(removeTask(e));
 
     return (
         <div className="card border-2 border-primary rounded-2xl p-2 grid grid-rows-4 grid-cols-8 gap-1 items-center text-left">
             <input 
                 type="checkbox" 
                 className="row-span-4 col-span-1 w-6" 
-                onClick={removeTask}
+                onClick={onRemove}
             />
             <h2 className="col-span-7 flex justify-between items-center gap-2 text-xl font-bold">
                 <span className="text-primary">{title}</span>

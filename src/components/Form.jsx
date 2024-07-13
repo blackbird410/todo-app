@@ -1,8 +1,10 @@
-import { useContext, useState } from "react";
-import { AppContext } from "../App";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addTask, toggleForm } from "../tasks/taskActions";
 
 export default function Form() {
-    const { allTasks, isFormVisible, setAllTasks, toggleForm } = useContext(AppContext);
+    const dispatch = useDispatch();
+
     const [formData, setFormData] = useState(
         {
             title: "",
@@ -32,13 +34,11 @@ export default function Form() {
         const currentDate = new Date(dateTime).toLocaleString();
         setFormData((formData) => ({...formData, dueDate: currentDate}));
         
-        setAllTasks([...allTasks, formData]);
-        toggleForm();
+        dispatch(addTask(formData));
+        dispatch(toggleForm());
     }
 
     return (
-        <>
-            {isFormVisible &&
                 <form 
                     className="form"
                     id="task-form"
@@ -114,14 +114,13 @@ export default function Form() {
                         <button 
                             className="form-btn bg-red-600"
                             id="cancel-btn" 
-                            onClick={toggleForm}
+                            onClick={() => dispatch(toggleForm())}
                             type="button"
                         >
                             Cancel
                         </button>
                     </div>
 
-            </form>}
-        </>
+            </form>
     );
 }

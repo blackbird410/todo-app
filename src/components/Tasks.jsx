@@ -1,6 +1,8 @@
 import { TaskList } from "./Task";
-import { useContext, useEffect, useState } from "react";
-import { AppContext } from "../App";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedDay, toggleForm } from "../tasks/taskActions";
+import { getCurrentWeek } from "../functions";
 
 const fetchQuote = () => {
     const [quote, setQuote] = useState({});
@@ -42,7 +44,11 @@ export function Header() {
 
 export function Status({ type }) {
     const [weekDay, month, day] = new Date().toString().split(" ");
-    const { dayTasks, weekTasks, allTasks, overdueTasks, userList } = useContext(AppContext);
+    const dayTasks = useSelector(state => state.task.dayTasks);
+    const weekTasks = useSelector(state => state.task.weekTasks);
+    const allTasks = useSelector(state => state.task.allTasks);
+    const overdueTasks = useSelector(state => state.task.overdueTasks);
+    const userList = useSelector(state => state.task.userList);
 
     const eventCount = {
         "day": dayTasks.length,
@@ -85,8 +91,10 @@ export function Status({ type }) {
 }
 
 export function DaySelector() {
-    const { handleSelectDay, currentWeek } = useContext(AppContext);
-    let modifiedWeek = ["", ...currentWeek];
+    const dispatch = useDispatch();
+    let modifiedWeek = ["", ...getCurrentWeek()];
+    
+    const onSelectDay = (e) => dispatch(setSelectedDay(e));
 
     return (
         <div className="flex gap-4 justify-center text-lg">
@@ -97,11 +105,10 @@ export function DaySelector() {
                         ? <option 
                         key={day}
                         value={day}
-                        onClick={handleSelectDay}>{day}</option> 
+                        onClick={onSelectDay}>{day}</option> 
                         : <option 
                             key="default" 
                             value={day}
-                            selected={true}
                             disabled={true}
                             hidden={true}
                         >Choose here</option>
@@ -112,16 +119,14 @@ export function DaySelector() {
 }
 
 export default function Tasks({ type }) {
-    const { 
-        dayTasks, 
-        allTasks, 
-        overdueTasks, 
-        toggleForm,
-        isWeek,
-        currentWeek,
-        selectedDay,
-        currentList
-    } = useContext(AppContext);
+    const dispatch = useDispatch();
+    const dayTasks = useSelector(state => state.task.dayTasks);
+    const allTasks = useSelector(state => state.task.allTasks);
+    const overdueTasks = useSelector(state => state.task.overdueTasks);
+    const isWeek = useSelector(state => state.task.isWeek);
+    const currentList = useSelector(state => state.task.currentList);
+    const selectedDay = useSelector(state => state.task.selectedDay);
+    const currentWeek = useSelector(state => state.task.currentWeek);
 
     const getTasks = () => {
         const match = {
@@ -155,10 +160,10 @@ export default function Tasks({ type }) {
             <TaskList tasks={getTasks()} />
             <button 
                 className="btn bg-primary rounded p-2 font-bold text-xl hover:bg-gray-400 hover:text-white" 
-                onClick={toggleForm}
+                onClick={() => dispatch(toggleForm())}
             >
                 New Task
             </button>
         </div>
     );
-}
+};
