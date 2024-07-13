@@ -4,7 +4,12 @@ import { useDispatch } from "react-redux";
 
 function Task({ title, dueDate, notes, description, priority }) {
     const dispatch = useDispatch();
-    const onRemove = (e) => dispatch(removeTask(e));
+    const onRemove = (e) => dispatch(removeTask({
+            title: e.target.parentNode.childNodes[1].textContent, 
+            dueDate: e.target.parentNode.childNodes[2].textContent, 
+            notes: e.target.parentNode.childNodes[3].textContent,
+            description: e.target.parentNode.childNodes[4].textContent,
+    }));
 
     return (
         <div className="card border-2 border-primary rounded-2xl p-2 grid grid-rows-4 grid-cols-8 gap-1 items-center text-left">

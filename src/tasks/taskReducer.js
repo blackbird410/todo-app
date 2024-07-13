@@ -18,7 +18,7 @@ import {
     TOGGLE_NAVBAR, 
 } from "./taskActionTypes";
 
-const userTasks = [];
+const userTasks = getLocalStorageData();
 
 const initialState = {
     allTasks: userTasks,
@@ -38,17 +38,6 @@ const initialState = {
     isOverdue: false,
 };
 
-const getTask = (e) => {
-    const target = e.target.parentNode;
-
-    return(
-        {
-            title: target.childNodes[1].textContent, 
-            dueDate: new Date(target.childNodes[2].textContent), 
-            notes: target.childNodes[3].textContent,
-            description: target.childNodes[4].textContent,
-        });
-}
 
 const taskReducer = (state = initialState, action) => {
     console.log("Current state: ", state.isFormVisible);
@@ -66,18 +55,14 @@ const taskReducer = (state = initialState, action) => {
                 userList: getUserLists(tasks),
             }
         }
-        case REMOVE_TASK: {
-            const info = getTask(action.payload);
-
-            return {
-                ...state,
-                allTasks: state.allTasks.filter(item => 
-                    (item.title !== info.title 
-                        && new Date(item.dueDate) !== info.dueDate 
-                        && item.notes !== info.notes 
-                        && item.description !== info.description)
-                )
-            }
+        case REMOVE_TASK: return {
+            ...state,
+            allTasks: state.allTasks.filter(item => 
+                (item.title !== action.payload.title 
+                    && new Date(item.dueDate) !== new Date(action.payload.dueDate) 
+                    && item.notes !== action.payload.notes 
+                    && item.description !== action.payload.description)
+            )
         }
         case ADD_USER_LIST: return {
             ...state,
