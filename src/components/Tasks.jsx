@@ -1,6 +1,8 @@
 import { TaskList } from "./Task";
-import { useContext, useEffect, useState } from "react";
-import { AppContext } from "../App";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedDay, toggleForm } from "../tasks/taskActions";
+import { getCurrentWeek } from "../functions";
 
 const fetchQuote = () => {
     const [quote, setQuote] = useState({});
@@ -42,7 +44,11 @@ export function Header() {
 
 export function Status({ type }) {
     const [weekDay, month, day] = new Date().toString().split(" ");
-    const { dayTasks, weekTasks, allTasks, overdueTasks, userList } = useContext(AppContext);
+    const dayTasks = useSelector(state => state.task.dayTasks);
+    const weekTasks = useSelector(state => state.task.weekTasks);
+    const allTasks = useSelector(state => state.task.allTasks);
+    const overdueTasks = useSelector(state => state.task.overdueTasks);
+    const userList = useSelector(state => state.task.userList);
 
     const eventCount = {
         "day": dayTasks.length,
@@ -85,23 +91,25 @@ export function Status({ type }) {
 }
 
 export function DaySelector() {
-    const { handleSelectDay, currentWeek } = useContext(AppContext);
+    const dispatch = useDispatch();
+    const currentWeek = useSelector(state => state.task.currentWeek);
     let modifiedWeek = ["", ...currentWeek];
+    
+    const onSelectDay = (e) => dispatch(setSelectedDay(e.target.value));
 
     return (
         <div className="flex gap-4 justify-center text-lg">
             <label htmlFor="day-select" className="text-primary font-thin">Day of the week:</label>
-            <select id="day-select" className="p-2 rounded-md text-black">
+            <select id="day-select" defaultValue={"DEFAULT"} className="p-2 rounded-md text-black">
                 {modifiedWeek.map((day) => 
                     day 
                         ? <option 
                         key={day}
                         value={day}
-                        onClick={handleSelectDay}>{day}</option> 
+                        onClick={onSelectDay}>{day}</option> 
                         : <option 
                             key="default" 
-                            value={day}
-                            selected={true}
+                            value="DEFAULT"
                             disabled={true}
                             hidden={true}
                         >Choose here</option>
@@ -112,16 +120,14 @@ export function DaySelector() {
 }
 
 export default function Tasks({ type }) {
-    const { 
-        dayTasks, 
-        allTasks, 
-        overdueTasks, 
-        toggleForm,
-        isWeek,
-        currentWeek,
-        selectedDay,
-        currentList
-    } = useContext(AppContext);
+    const dispatch = useDispatch();
+    const dayTasks = useSelector(state => state.task.dayTasks);
+    const allTasks = useSelector(state => state.task.allTasks);
+    const overdueTasks = useSelector(state => state.task.overdueTasks);
+    const isWeek = useSelector(state => state.task.isWeek);
+    const currentList = useSelector(state => state.task.currentList);
+    const selectedDay = useSelector(state => state.task.selectedDay);
+    const currentWeek = useSelector(state => state.task.currentWeek);
 
     const getTasks = () => {
         const match = {
@@ -148,17 +154,17 @@ export default function Tasks({ type }) {
     }
     
     return (
-        <div className="flex flex-col gap-4 p-4 mt-8">
+        <div className="flex flex-col gap-4 p-4 mt-8 animate-appear">
             <Header />
             <Status type={type} />
             {isWeek && <DaySelector /> }
             <TaskList tasks={getTasks()} />
             <button 
                 className="btn bg-primary rounded p-2 font-bold text-xl hover:bg-gray-400 hover:text-white" 
-                onClick={toggleForm}
+                onClick={() => dispatch(toggleForm())}
             >
                 New Task
             </button>
         </div>
     );
-}
+};

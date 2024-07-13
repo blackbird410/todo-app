@@ -1,0 +1,16 @@
+export const ADD_TASK = "ADD_TASK"; 
+export const REMOVE_TASK = "REMOVE_TASK"; 
+export const ADD_USER_LIST = "ADD_USER_LIST";
+export const SET_IS_NAVBAR_OPEN = "SET_IS_NAVBAR_OPEN";
+export const SET_IS_FORM_VISIBLE = "SET_IS_FORM_VISIBLE";
+export const SET_IS_LIST_FORM_VISIBLE = "SET_IS_LIST_FORM_VISIBLE";
+export const SET_IS_DAY = "SET_IS_DAY";
+export const SET_IS_WEEK = "SET_IS_WEEK";
+export const SET_IS_ALL = "SET_IS_ALL";
+export const SET_IS_OVERDUE = "SET_IS_OVERDUE";
+export const SET_CURRENT_LIST = "SET_CURRENT_LIST"; 
+export const SET_SELECTED_DAY = "SET_SELECTED_DAY";
+export const TOGGLE_FORM = "TOGGLE_FORM";
+export const TOGGLE_LIST_FORM = "TOGGLE_LIST_FORM";
+export const TOGGLE_NAVBAR = "TOGGLE_NAVBAR";
+export const DISPLAY = "DISPLAY";
